@@ -1,15 +1,13 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "npm run dev"
-healthcheckPath = "/"
-healthcheckTimeout = 300
 restartPolicyType = "always"
 
 [[services]]
 name = "leave-management-frontend"
-source = "./frontend"
+source = "."
 
 [services.variables]
 NEXT_PUBLIC_API_URL = "${{BACKEND_URL}}/api/v1"
