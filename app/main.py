@@ -38,33 +38,16 @@ async def value_error_handler(request: Request, exc: ValueError):
 
 @app.get("/api/v1/health")
 async def health_check():
-    try:
-        return {
-            "status": "healthy",
-            "timestamp": datetime.utcnow().isoformat(),
-            "version": "1.0.0",
-            "environment": ENVIRONMENT,
-            "service": "leave-management-backend"
-        }
-    except Exception as e:
-        return {
-            "status": "unhealthy",
-            "error": str(e),
-            "timestamp": datetime.utcnow().isoformat()
-        }
-
-@app.get("/health")
-async def simple_health():
-    return {"status": "ok"}
+    return {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "version": "1.0.0",
+        "environment": ENVIRONMENT
+    }
 
 @app.on_event("startup")
 async def startup_event():
-    try:
-        create_tables()
-        print("✅ Database tables created successfully")
-    except Exception as e:
-        print(f"⚠️  Database initialization warning: {e}")
-        print("🔄 App will continue without database (will retry on first request)")
+    create_tables()
 
 app.include_router(router, prefix="/api/v1")
 
@@ -73,9 +56,9 @@ async def root():
     return {
         "message": "Leave Management System API",
         "version": "1.0.0",
-        "docs": "/docs",
-        "health": "/api/v1/health",
-        "simple_health": "/health"
+        "docs": "/docs"
     }
 
-
+@app.get("/health")
+async def simple_health():
+    return {"status": "healthy"}
