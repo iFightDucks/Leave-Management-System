@@ -2,7 +2,7 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "npm start"
+startCommand = "npm run dev"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "always"
