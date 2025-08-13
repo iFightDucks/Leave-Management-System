@@ -4,6 +4,7 @@ import { useEmployee, useEmployeeLeaveBalance, useEmployeeLeaveRequests } from '
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { LeaveRequest } from '@/lib/types'
 import { 
   User, 
   Mail, 
@@ -191,7 +192,7 @@ export function EmployeeDetails({ employeeId }: EmployeeDetailsProps) {
             </div>
           ) : leaveRequests.length > 0 ? (
             <div className="space-y-4">
-              {leaveRequests.map((request) => (
+              {leaveRequests.map((request: LeaveRequest) => (
                 <div key={request.id} className="border rounded-lg p-4 hover:bg-gray-50">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
