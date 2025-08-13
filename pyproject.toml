@@ -1,0 +1,35 @@
+[project]
+name = "leave-management-system"
+version = "1.0.0"
+description = "Mini Leave Management System MVP"
+authors = [{name = "Developer", email = "dev@company.com"}]
+dependencies = [
+    "fastapi>=0.104.1",
+    "uvicorn[standard]>=0.24.0",
+    "sqlalchemy>=2.0.23",
+    "pydantic>=2.5.0",
+    "python-multipart>=0.0.6",
+    "python-dateutil>=2.8.2"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "httpx>=0.25.2",
+    "black>=23.11.0",
+    "isort>=5.12.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
