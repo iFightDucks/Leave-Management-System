@@ -18,6 +18,9 @@ COPY . .
 # Environment variables for build
 ENV NEXT_TELEMETRY_DISABLED 1
 
+# Debug: List contents to verify files
+RUN ls -la src/lib/
+
 RUN npm run build
 
 # Production image, copy all the files and run next
