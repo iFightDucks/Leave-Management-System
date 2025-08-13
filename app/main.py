@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,9 +12,14 @@ app = FastAPI(
     version="1.0.0"
 )
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+
+allowed_origins = ["*"] if ENVIRONMENT == "development" else [FRONTEND_URL, "https://*.railway.app"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,6 +35,15 @@ async def value_error_handler(request: Request, exc: ValueError):
             "timestamp": datetime.utcnow().isoformat()
         }
     )
+
+@app.get("/api/v1/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "version": "1.0.0",
+        "environment": ENVIRONMENT
+    }
 
 @app.on_event("startup")
 async def startup_event():
