@@ -4,12 +4,12 @@ WORKDIR /app
 
 RUN pip install uv
 
-COPY pyproject.toml .
-RUN uv sync
-RUN uv pip install -e .
+COPY pyproject.toml uv.lock* ./
+RUN uv sync --frozen
+RUN uv pip install --no-deps -e .
 
 COPY . .
 
 EXPOSE $PORT
 
-CMD uv run python run_dev.py
+CMD uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT
