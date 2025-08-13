@@ -6,13 +6,14 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 interface EmployeePageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function EmployeePage({ params }: EmployeePageProps) {
-  const employeeId = parseInt(params.id)
+export default async function EmployeePage({ params }: EmployeePageProps) {
+  const { id } = await params
+  const employeeId = parseInt(id)
 
   return (
     <MainLayout>
