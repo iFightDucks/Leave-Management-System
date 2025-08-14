@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// Employee validation schema
 export const createEmployeeSchema = z.object({
   name: z.string()
     .min(2, 'Name must be at least 2 characters')
@@ -22,7 +21,6 @@ export const createEmployeeSchema = z.object({
     .max(365, 'Leave entitlement cannot exceed 365 days'),
 })
 
-// Leave request validation schema
 export const createLeaveRequestSchema = z.object({
   employee_id: z.number()
     .positive('Please select an employee'),
@@ -30,7 +28,7 @@ export const createLeaveRequestSchema = z.object({
     .refine((date) => {
       const parsedDate = new Date(date)
       const today = new Date()
-      today.setHours(0, 0, 0, 0) // Start of today
+      today.setHours(0, 0, 0, 0) 
       return !isNaN(parsedDate.getTime()) && parsedDate >= today
     }, 'Start date cannot be in the past'),
   end_date: z.string()
@@ -49,7 +47,6 @@ export const createLeaveRequestSchema = z.object({
   path: ['end_date'],
 })
 
-// Leave approval/rejection schema
 export const updateLeaveRequestSchema = z.object({
   status: z.enum(['approved', 'rejected']),
   processed_by: z.string()
@@ -57,7 +54,6 @@ export const updateLeaveRequestSchema = z.object({
     .max(100, 'Processed by name must be less than 100 characters'),
 })
 
-// Export type inference
 export type CreateEmployeeFormData = z.infer<typeof createEmployeeSchema>
 export type CreateLeaveRequestFormData = z.infer<typeof createLeaveRequestSchema>
 export type UpdateLeaveRequestFormData = z.infer<typeof updateLeaveRequestSchema>

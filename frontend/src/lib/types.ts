@@ -1,5 +1,3 @@
-// API Response Types (matching FastAPI backend)
-
 export interface Employee {
   id: number
   name: string
@@ -29,7 +27,6 @@ export interface LeaveRequest {
   applied_date: string
   processed_date?: string
   processed_by?: string
-  // Additional fields for UI (populated when fetching all requests)
   employee_name?: string
   employee_email?: string
   employee_department?: string
